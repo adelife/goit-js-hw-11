@@ -13,7 +13,7 @@ const form = document.querySelector('.search-form');
 const input= document.querySelector('.search-input');
 const startBtn= document.querySelector('.start-btn');
 
-const url = `${BAZE_URL}?key=41911500-2109ce3c8bb16633259977e96&q=${inputValue}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
+const url = `${BASE_URL}?key=41911500-2109ce3c8bb16633259977e96&q=${inputValue}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
 
 
 form.addEventListener('submit', handleSearch)
