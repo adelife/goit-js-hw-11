@@ -28,6 +28,7 @@ function handleSearch(event){
                 'Sorry, there are no images matching your search query. Please try again!',
             });
       } 
+      
       container.innerHTML= ('beforeend', createMarkup(data.hits));
       const refreshPage = new SimpleLightbox('.gallery a', {
           captionsData: 'alt',
@@ -38,10 +39,10 @@ function handleSearch(event){
       })
   .catch(onFetchError)
 }
-
+const url = `${BASE_URL}?key=${API_KEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
 
 function fetchImage(name){
-  const url = `${BASE_URL}?key=${API_KEY}&q=${inputValue}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
+ 
     return fetch(url).then((resp)=> {
         if(!resp.ok){
             throw new Errow(resp.statusText);
@@ -66,7 +67,7 @@ function createMarkup(arr) {
   <a class="gallery-link" href="${largeImageURL}">
     <img
       class="gallery-image"
-      src=="${webformatURL}"
+      src="${webformatURL}"
       alt="${tags}"
     />
     <p class= "gallery-descr">Likes: ${likes} Views: ${views} Comments: ${comments}</span> Downloads:${downloads}</p>
