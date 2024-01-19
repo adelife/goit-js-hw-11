@@ -13,37 +13,36 @@ const form = document.querySelector('.search-form');
 const input= document.querySelector('.search-input');
 const startBtn= document.querySelector('.start-btn');
 
-const url = `${BASE_URL}?key=41911500-2109ce3c8bb16633259977e96&q=${inputValue}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
-
-
 form.addEventListener('submit', handleSearch)
 
 function handleSearch(event){
-    event.preventDefault();
-    container.innerHTML = '';
-    const inputValue = event.target.elements.input.value;
-    fetchImage(inputValue)
-    .then(data => {
-        if(!data.hits.lenght){
-            iziToast.error({
-                title: 'Error',
-                message:
-                  'Sorry, there are no images matching your search query. Please try again!',
-              });
-        }
-        container.innerHTML= ('beforeend', createMarkup(data.hits));
-        const refreshPage = new SimpleLightbox('.gallery a', {
-            captionsData: 'alt',
-            captionDelay: 250,
-          });
-          refreshPage.refresh();
-          form.reset();
-        })
-    .catch(onFetchError)
+  event.preventDefault();
+
+  const inputValue = event.target.elements.value;
+  fetchImage(inputValue)
+  .then(data => {
+      if(!data.hits.lenght){
+          iziToast.error({
+              title: 'Error',
+              message:
+                'Sorry, there are no images matching your search query. Please try again!',
+            });
+      } 
+      container.innerHTML= ('beforeend', createMarkup(data.hits));
+      const refreshPage = new SimpleLightbox('.gallery a', {
+          captionsData: 'alt',
+          captionDelay: 250,
+        });
+        refreshPage.refresh();
+        form.reset();
+      })
+  .catch(onFetchError)
 }
 
+
 function fetchImage(name){
-    return fetch(`${url}}`).then((resp)=> {
+  const url = `${BASE_URL}?key=${API_KEY}&q=${inputValue}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
+    return fetch(url).then((resp)=> {
         if(!resp.ok){
             throw new Errow(resp.statusText);
         }
@@ -51,6 +50,7 @@ function fetchImage(name){
     })
     
 }
+
 
 function createMarkup(arr) {
   return arr
