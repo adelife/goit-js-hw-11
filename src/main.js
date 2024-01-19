@@ -18,7 +18,7 @@ form.addEventListener('submit', handleSearch)
 function handleSearch(event){
   event.preventDefault();
 
-  const inputValue = event.target.elements.value;
+  const inputValue = event.target.elements.query.value;
   fetchImage(inputValue)
   .then(data => {
       if(!data.hits.lenght){
@@ -39,10 +39,12 @@ function handleSearch(event){
       })
   .catch(onFetchError)
 }
-const url = `${BASE_URL}?key=${API_KEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
+
 
 function fetchImage(name){
- 
+  
+const url = `${BASE_URL}?key=${API_KEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
+
     return fetch(url).then((resp)=> {
         if(!resp.ok){
             throw new Errow(resp.statusText);
@@ -51,7 +53,6 @@ function fetchImage(name){
     })
     
 }
-
 
 function createMarkup(arr) {
   return arr
