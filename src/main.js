@@ -12,16 +12,19 @@ const container = document.querySelector('.gallery');
 const form = document.querySelector('.search-form');
 const input= document.querySelector('.search-input');
 const startBtn= document.querySelector('.start-btn');
+const loader = document.querySelector('.loader');
 
+loader.style.display = 'none';
 form.addEventListener('submit', handleSearch)
 
 function handleSearch(event){
   event.preventDefault();
-
+  loader.style.display = 'block';
   const inputValue = event.target.elements.query.value;
   fetchImage(inputValue)
   .then(data => {
-      if(!data.hits.lenght){
+    loader.style.display = 'none';
+      if(!data.hits.length){
           iziToast.error({
               title: 'Error',
               message:
@@ -36,6 +39,7 @@ function handleSearch(event){
         });
         refreshPage.refresh();
         form.reset();
+        
       })
   .catch(onFetchError)
 }
@@ -71,12 +75,13 @@ function createMarkup(arr) {
       src="${webformatURL}"
       alt="${tags}"
     />
-    <p class= "gallery-descr">Likes: ${likes} Views: ${views} Comments: ${comments}</span> Downloads:${downloads}</p>
+    <p class= "gallery-descr">• Likes: ${likes} • Views: ${views} • Comments: ${comments} •</span> Downloads:${downloads}</p>
   </a>
 </li>
   `
     )
     .join('');
+    
 }
 
 function onFetchError(error){
