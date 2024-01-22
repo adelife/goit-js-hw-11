@@ -31,8 +31,8 @@ function handleSearch(event){
                 'Sorry, there are no images matching your search query. Please try again!',
             });
       } 
-      
-      container.innerHTML= ('beforeend', createMarkup(data.hits));
+      container.innerHTML = "";
+      container.innerHTML = createMarkup(data.hits);
       const refreshPage = new SimpleLightbox('.gallery a', {
           captionsData: 'alt',
           captionDelay: 250,
@@ -47,11 +47,11 @@ function handleSearch(event){
 
 function fetchImage(name){
   
-const url = `${BASE_URL}?key=${API_KEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=9`;
+const url = `${BASE_URL}?key=${API_KEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=18`;
 
     return fetch(url).then((resp)=> {
         if(!resp.ok){
-            throw new Errow(resp.statusText);
+            throw new Error(resp.statusText);
         }
         return resp.json();
     })
@@ -85,6 +85,10 @@ function createMarkup(arr) {
 }
 
 function onFetchError(error){
-    alert("Error")
+  iziToast.error({
+    title: 'Error',
+    message:
+      'OOps... Plese try again',
+  });
 }
     
